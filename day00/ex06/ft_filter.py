@@ -6,11 +6,7 @@ Return an iterator yielding those items of iterable for which function(item)
 is true. If function is None, return the items that are true.
 """
 
-
-def main():
-    print(filter.__doc__)
-
-
-if __name__ == "__main__":
-    main()
-
+def ft_filter(function, iterable):
+    if (type(function) == type(None)):
+        return iter(iterable)
+    return iter(x for x in iterable if function(x))
