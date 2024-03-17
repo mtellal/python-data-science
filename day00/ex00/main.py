@@ -1,12 +1,5 @@
-#######################################
-#                TESTS                #
-#######################################
 
 print("\nTESTS\n")
-
-##################
-#       LIST     # 
-##################
 
 print("\n\n#### LIST ####\n")
 
@@ -28,9 +21,6 @@ print("list.remove(list[0])")
 list.remove(list[0])
 print(list)
 
-##################
-#      TUPLE     #
-##################
 
 print("\n\n#### TUPLE ####\n")
 
@@ -48,10 +38,6 @@ except Exception as msg:
 print("\n- Tuple items are indexeable")
 print("tuple[0]:", t[0])
 
-
-##################
-#       SET      #
-##################
 
 print("\n#### SET ####\n")
 
