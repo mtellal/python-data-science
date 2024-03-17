@@ -1,15 +1,27 @@
 import sys
 
 
+"""
+    This program print informations about the numbers of type letters in a text
+
+    Args:
+        text (str): Text to handle
+
+    Returns:
+        None: display in stdin the informations of the text
+
+"""
+
+
 def isPunctuationMark(c: str) -> bool:
     """
-    Verify with the param str is a punctuation mark
+    Verify if the str c is a punctuation mark
 
     Args:
         c (str): string to verify
 
     Returns:
-        bool: if str is a punctuation mark
+        bool: str is a punctuation mark
     """
     return ".?!,;:-–()[]{}'\"".find(c) != -1
 
@@ -49,9 +61,9 @@ def countLetters(s: str) -> dict:
     return d
 
 
-def display(d: dict):
+def display(d: dict) -> None:
     """
-    Dsiplay the types and numbers inside a dictionary
+    Dsiplay the informations
 
     Args:
         d (dict): The dictionary to display
@@ -65,16 +77,27 @@ def display(d: dict):
     print(d["digits"], "digits")
 
 
+def displayInfos(text: str) -> None:
+    d = countLetters(text)
+    display(d)
+
+
 def main():
     args = sys.argv
     args_len = len(args)
     try:
         if args_len == 1:
-            print("wait user stdin")
+            try:
+                print("What is the text to count?")
+                for line in sys.stdin:
+                    displayInfos(line)
+                    print("\nWhat is the text to count?")
+            except KeyboardInterrupt:
+                pass
         else:
+            print("length:", len(sys.argv[1]))
             assert args_len == 2, "wrong number of arguments"
-            d = countLetters(args[1])
-            display(d)
+            displayInfos(sys.argv[1])
     except AssertionError as msg:
         print("AssertionError:", msg)
 
