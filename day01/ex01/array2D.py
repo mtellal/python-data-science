@@ -6,7 +6,15 @@
 """
 
 
-def verify_lists(_list: list, start: int, end: int) -> bool:
+def verify_lists(_list: list, start: int, end: int):
+    """
+        Verify if arguments are valid
+        
+        Arguments:
+            _list (list): array to verify
+            start (int): int of start index (slice)
+            end (int): int of end index (slice)
+    """
     assert type(_list) is list, "bad argument"
     assert type(start) is int, "start not an int"
     assert type(end) is int, "end not an int"
@@ -19,6 +27,17 @@ def verify_lists(_list: list, start: int, end: int) -> bool:
 
 
 def slice_me(family: list, start: int, end: int) -> list:
+    """
+        Slice a 2D array from start to end and return it
+
+        Arguments:
+            family (list): Array to slice
+            start (int): first index to slice
+            end (int): last index tto slice
+        Returns:
+            list: new sliced array
+    """
+
     try:
         verify_lists(family, start, end)
         print(f"My shape is: ({len(family)}, {len(family[0])})")
