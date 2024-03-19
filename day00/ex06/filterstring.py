@@ -22,14 +22,12 @@ def verify_arguments() -> int:
     """
     len_args = len(sys.argv)
     assert len_args == 3, "the arguments are bad"
-    s = sys.argv[2]
-    sign = 1
-    if s[0] == '-' or s[0] == '+':
-        if s[0] == '-':
-            sign *= -1
-        s = s[1:]
-    assert s.isdigit(), "not a valid int"
-    return int(s) * sign
+    assert isinstance(sys.argv[1], str), "arg[1] invalid str"
+    try:
+        int(sys.argv[2])
+    except ValueError:
+        raise AssertionError("arg[2] invalid int")
+    return int(sys.argv[2])
 
 
 def main():
@@ -49,6 +47,7 @@ def main():
         it = ft_filter(lambda x: (len(x) > word_len and len(x) > 0), words)
         final = []
         for x in it:
+            assert x.isalnum(), "invalid string not alnum"
             final.append(x)
         print(final)
     except AssertionError as msg:

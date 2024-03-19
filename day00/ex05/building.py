@@ -13,19 +13,6 @@ import sys
 """
 
 
-def isPunctuationMark(c: str) -> bool:
-    """
-    Verify if the str c is a punctuation mark
-
-    Args:
-        c (str): string to verify
-
-    Returns:
-        bool: str is a punctuation mark
-    """
-    return ".?!,;:-–()[]{}'\"".find(c) != -1
-
-
 def countLetters(s: str) -> dict:
     """
     Count the letters types in a string
@@ -49,7 +36,7 @@ def countLetters(s: str) -> dict:
             d["upperLetters"] += 1
         elif s[i].islower():
             d["lowerLetters"] += 1
-        elif isPunctuationMark(s[i]):
+        elif ".?!,;:-–()[]{}'\"".find(s[i]) != -1:
             d["punctuationMarks"] += 1
         elif len(s) >= 3 and s[i:i+3] == "...":
             i += 3
@@ -95,7 +82,6 @@ def main():
             except KeyboardInterrupt:
                 pass
         else:
-            print("length:", len(sys.argv[1]))
             assert args_len == 2, "wrong number of arguments"
             displayInfos(sys.argv[1])
     except AssertionError as msg:

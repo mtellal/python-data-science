@@ -66,7 +66,7 @@ def main():
         for x in text:
             if x.isalnum() is False:
                 if x.isspace():
-                    final += "\\" + " "
+                    final += "/" + " "
                 else:
                     raise AssertionError("the arguments are bad")
             else:
@@ -74,6 +74,7 @@ def main():
         print(final[:-1])
     except AssertionError as msg:
         print("AssertionError:", msg)
+
 
 if __name__ == "__main__":
     main()
