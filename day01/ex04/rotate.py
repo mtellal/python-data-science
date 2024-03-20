@@ -59,8 +59,9 @@ def printImageInformations(img: Image):
     array = [[[x] for x in row] for row in array]
     array = np.asarray(array)
     shape = np.shape(array)
-    print("New shape after slicing:", str(shape), "or", str(size))
+    print("The shape of image is:", str(shape), "or", str(size))
     print(array)
+    return array
 
 
 def main():
@@ -69,6 +70,9 @@ def main():
     img = img.crop((450, 100, 850, 500))
     img = img.convert("L")
     printImageInformations(img)
+    img = img.rotate(90)
+    print("New shape after Transpose:", img.size)
+    print(np.asarray(img))
     final_img = createFinalImage(img)
     final_img.show()
 
