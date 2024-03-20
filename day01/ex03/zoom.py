@@ -3,6 +3,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 
+def createFinalImage(img: Image):
+    border_width = 50
+    graduation_interval = 50
+    black=(0, 0, 0)
+    white=(255, 255, 255)
+
+    width = img.width + 2 * border_width
+    height = img.height + 2 * border_width
+
+    f_img = Image.new("RGB", (width, height), white)
+
+    f_img.paste(img, (border_width, border_width))
+
+    draw = ImageDraw.Draw(f_img)
+    font = ImageFont.load_default()
+
+    for x in range(border_width, width, graduation_interval):
+        draw.text((x - 5, border_width - 25), str(x - border_width), fill=black)
+        draw.line(((x, border_width), (x, border_width - 10)), black)
+
+    for y in range(border_width, height, graduation_interval):
+        draw.text((border_width - 30, y - 5), str(y - border_width), fill=black)
+        draw.line(((border_width, y), (border_width - 10, y)), black)
+    return f_img
+
 
 def main():
     array = ft_load("animal.jpeg")
@@ -12,35 +37,8 @@ def main():
     img = img.convert("L")
     array = np.array(img)
 
-    border_width = 50
-    border_color = (255, 255, 255)  # Couleur blanche pour la bordure
-    graduation_interval = 50
-
-    # Définir la taille de l'image avec la bordure
-    new_width = img.width + 2 * border_width
-    new_height = img.height + 2 * border_width
-
-    # Créer une nouvelle image avec une bordure blanche
-    border_image = Image.new("RGB", (new_width, new_height), border_color)
-
-    # Copier l'image d'origine dans la nouvelle image avec la bordure
-    border_image.paste(img, (border_width, border_width))
-
-    # Dessiner la graduation sur la bordure
-    draw = ImageDraw.Draw(border_image)
-    font = ImageFont.load_default()
-
-    # Graduation sur l'axe des x
-    for x in range(border_width, new_width, graduation_interval):
-        draw.text((x - 5, border_width - 25), str(x - border_width), font=font, fill=(0, 0, 0))
-        draw.text((x - 1, border_width - 12), str("|"), font=font, fill=(0, 0, 0))
-
-    # Graduation sur l'axe des y
-    for y in range(border_width, new_height, graduation_interval):
-        draw.text((border_width - 40, y), str(y - border_width), font=font, fill=(0, 0, 0))
-
-    # Afficher l'image avec la bordure graduée
-    border_image.show()
+    final_img = createFinalImage(img)
+    final_img.show()
 
 
 if __name__ == "__main__":
