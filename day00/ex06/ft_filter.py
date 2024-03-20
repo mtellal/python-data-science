@@ -7,4 +7,4 @@ def ft_filter(function, iterable):
     If function is None, return the items that are true."""
     if function is None:
         return iter(iterable)
-    return iter(x for x in iterable if function(x))
+    return iter([x for x in iterable if function(x)])

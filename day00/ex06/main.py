@@ -7,9 +7,7 @@ print(ft_filter_module.__doc__)
 
 def displayIterable(obj, function_str: str):
     print(function_str, end='')
-    for x in obj:
-        print(x, end=', ')
-    print("")
+    print(list(obj))
 
 
 def test(function, array, function_tested: str = ""):
