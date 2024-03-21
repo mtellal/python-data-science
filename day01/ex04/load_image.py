@@ -7,7 +7,7 @@ import numpy as np
 """
 
 
-def ft_load(path: str) -> list:
+def ft_load(path: str,  _print: bool) -> list:
     """
         Load an image from a path and display image informations
 
@@ -23,12 +23,13 @@ def ft_load(path: str) -> list:
             err_format = "bad format file, JPEG or JPG ony"
             assert ["JPEG", "JPG"].count(img.format) > 0, err_format
             array = np.array(img)
-            print("The shape of this image is: ", end='')
-            if len(array) == 0:
-                print("(0, 0, 0)")
-            else:
-                print(array.shape)
-            print(array)
+            if _print is True:
+                print("The shape of this image is: ", end='')
+                if len(array) == 0:
+                    print("(0, 0, 0)")
+                else:
+                    print(array.shape)
+                print(array)
             return array
     except AssertionError as msg:
         print("AssertionError:", msg)

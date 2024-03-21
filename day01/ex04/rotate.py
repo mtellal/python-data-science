@@ -64,13 +64,32 @@ def printImageInformations(img: Image):
     return array
 
 
+def transpose(img: Image) -> np.ndarray:
+    """
+    Transpose an image (90deg rotation)
+    Arguments:
+        img (Image): image to transpose
+    Returns:
+        final (np.ndarray): transposed array
+    """
+    final = []
+    array = np.asarray(img)
+    column = len(array)
+    row = len(array[0])
+    for c in range(column, 0, -1):
+        final.append([ row[c - 1] for row in array])
+    final = np.array(final)
+    return final
+
+
 def main():
-    array = ft_load("animal.jpeg")
+    array = ft_load("animal.jpeg", _print=False)
     img = Image.fromarray(array)
     img = img.crop((450, 100, 850, 500))
     img = img.convert("L")
     printImageInformations(img)
-    img = img.rotate(90)
+    array = transpose(img)
+    img = Image.fromarray(array)
     print("New shape after Transpose:", img.size)
     print(np.asarray(img))
     final_img = createFinalImage(img)
