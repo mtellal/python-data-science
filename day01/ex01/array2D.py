@@ -9,7 +9,7 @@
 def verify_lists(_list: list, start: int, end: int):
     """
         Verify if arguments are valid
-        
+
         Arguments:
             _list (list): array to verify
             start (int): int of start index (slice)
@@ -41,7 +41,7 @@ def slice_me(family: list, start: int, end: int) -> list:
         verify_lists(family, start, end)
         if len(family) == 0:
             print("My shape is: (0, 0)")
-            return family 
+            return family
         print(f"My shape is: ({len(family)}, {len(family[0])})")
         x = slice(start, end)
         _list = family[x]
@@ -52,4 +52,3 @@ def slice_me(family: list, start: int, end: int) -> list:
         return _list
     except AssertionError as msg:
         print("Error:", msg)
-

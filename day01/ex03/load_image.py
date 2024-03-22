@@ -18,10 +18,13 @@ def ft_load(path: str) -> list:
     """
     try:
         assert type(path) is str, "path not a str"
+        assert len(path) > 0, "path empty"
         with Image.open(path) as img:
             assert img is not None, "image could not be read"
-            err_format = "bad format file, JPEG or JPG ony"
-            assert ["JPEG", "JPG"].count(img.format) > 0, err_format
+            err_format = "bad format file, JPEG or JPG only: "
+            valid_format = ["JPEG", "JPG"]
+            _format = img.format
+            assert valid_format.count(_format) > 0, err_format + _format
             array = np.array(img)
             print("The shape of this image is: ", end='')
             if len(array) == 0:
@@ -38,25 +41,6 @@ def ft_load(path: str) -> list:
         print("UnidentifiedImageError:", msg)
     except PermissionError as msg:
         print("PermissionError:", msg)
+    except Exception as msg:
+        print("Exception:", msg)
     return []
-
-
-def main():
-    ft_load(10)
-    ft_load([1, 2])
-    ft_load("not_found")
-    print("not_found.jpeg")
-    ft_load("not_found.jpeg")
-    print("animal_permission")
-    ft_load("animal_permission")
-    print("animal_not_jpeg")
-    ft_load("animal_not_jpeg")
-    print("animal_corrupted")
-    ft_load("animal_corrupted")
-    #ft_load("animal.jpeg")
-
-    pass
-
-
-if __name__ == "__main__":
-    main()

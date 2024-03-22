@@ -65,12 +65,17 @@ def printImageInformations(img: Image):
 
 def main():
     array = ft_load("animal.jpeg")
-    img = Image.fromarray(array)
-    img = img.crop((450, 100, 850, 500))
-    img = img.convert("L")
-    printImageInformations(img)
-    final_img = createFinalImage(img)
-    final_img.show()
+    if len(array) == 0:
+        return
+    try:
+        img = Image.fromarray(array)
+        img = img.crop((450, 100, 850, 500))
+        img = img.convert("L")
+        printImageInformations(img)
+        final_img = createFinalImage(img)
+        final_img.show()
+    except Exception as msg:
+        print("Error:", msg)
 
 
 if __name__ == "__main__":
