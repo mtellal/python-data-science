@@ -3,14 +3,8 @@
 """
 
 
-def isNumber(x) -> bool:
+def isNumber(x):
     return type(x) is int or type(x) is float
-
-
-def verify_lists(height: list, weight: list) -> int:
-    assert list(map(isNumber, height)).count(False) == 0, "bad item in list"
-    assert list(map(isNumber, weight)).count(False) == 0, "bad item in list"
-    assert len(height) == len(weight), "bad length lists"
 
 
 def give_bmi(height: list[int | float], weight: list[int | float]) -> list[int | float]:
@@ -26,10 +20,16 @@ def give_bmi(height: list[int | float], weight: list[int | float]) -> list[int |
     """
     try:
         assert type(height) is list and type(weight) is list, "bad type list"
-        verify_lists(height, weight)
-        print("list valid, going on ...")
+        for x in height:
+            assert type(x) is int or type(x) is float, "bad item list '" + str(x) + "'"
+        for x in weight:
+            assert type(x) is int or type(x) is float, "bad item list '" + str(x) + "'"
+        #assert list(map(isNumber, height)).count(False) == 0, "bad item in list"
+        #assert list(map(isNumber, weight)).count(False) == 0, "bad item in list"
+        assert len(height) == len(weight), "bad length lists"
         final = [None] * len(height)
         for i in range(0, len(height)):
+            assert height[i] != 0, "bad item (0)"
             final[i] = weight[i] / (height[i] ** 2)
         return final
     except AssertionError as msg:
