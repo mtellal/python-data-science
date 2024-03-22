@@ -76,6 +76,8 @@ test_give_bmi([1, 2, 3], [35.553, 234])
 
 test_give_bmi([1, 234, 233], [-54654651, -542, -3543])
 
+test_give_bmi([1, 1e300, 233], [-54654651, -542, -3543])
+
 
 
 def test_apply_limit(bmi: list, limit: int) -> list[bool]:

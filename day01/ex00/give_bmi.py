@@ -34,7 +34,8 @@ def give_bmi(height: list[int | float], weight: list[int | float]) -> list:
         return final
     except AssertionError as msg:
         print("Error:", msg)
-
+    except OverflowError as msg:
+        print("Error: invalid value:", msg)
 
 def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
     """
