@@ -7,7 +7,7 @@ def isNumber(x):
     return type(x) is int or type(x) is float
 
 
-def give_bmi(height: list[int | float], weight: list[int | float]) -> list[int | float]:
+def give_bmi(height: list[int | float], weight: list[int | float]) -> list:
     """
         From 2 lists of integer heights and weights,
         calculate the ibm and return the calculated values
@@ -19,13 +19,13 @@ def give_bmi(height: list[int | float], weight: list[int | float]) -> list[int |
             list: list of ibm from heights and weights
     """
     try:
-        assert type(height) is list and type(weight) is list, "bad type list"
+        err_i = "bad item list '"
+        err_l = "bad type list"
+        assert type(height) is list and type(weight) is list, err_l
         for x in height:
-            assert type(x) is int or type(x) is float, "bad item list '" + str(x) + "'"
+            assert type(x) is int or type(x) is float, err_i + str(x) + "'"
         for x in weight:
-            assert type(x) is int or type(x) is float, "bad item list '" + str(x) + "'"
-        #assert list(map(isNumber, height)).count(False) == 0, "bad item in list"
-        #assert list(map(isNumber, weight)).count(False) == 0, "bad item in list"
+            assert type(x) is int or type(x) is float, err_i + str(x) + "'"
         assert len(height) == len(weight), "bad length lists"
         final = [None] * len(height)
         for i in range(0, len(height)):
@@ -47,22 +47,11 @@ def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
     final = []
     try:
         assert type(bmi) is list, "bmi not a list"
-        invalid_type = "bmi item not an int or float"
+        assert type(limit) is int, "invalid limit '" + str(limit) + "'"
+        invalid_type = "bmi item not an int or float '"
         for x in bmi:
-            assert type(x) is int or type(x) is float, invalid_type
+            assert type(x) is int, invalid_type + str(x) + "'"
             final.append(x > limit)
         return final
     except AssertionError as msg:
         print("Error:", msg)
-
-
-def main():
-    give_bmi(["dw", 1, 2, 12.3], [])
-    give_bmi([1, 2, 12.3], None)
-    give_bmi([1, 2, 12.3], [1, 2])
-    give_bmi(["dw", 1], [1, 2])
-    give_bmi([2.3, 1], [1, 2])
-
-
-if __name__ == "__main__":
-    main()
