@@ -12,7 +12,7 @@ nc='\033[0m'
 
 def test_ft_load(path: str):
     print(f"path = '{path}'")
-    print(ft_load(str(path)))
+    ft_load(str(path))
     print()
 
 print(c, "\nMORE TESTS\n", nc)

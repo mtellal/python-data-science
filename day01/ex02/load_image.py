@@ -7,7 +7,7 @@ import numpy as np
 """
 
 
-def ft_load(path: str) -> list:
+def ft_load(path: str) -> np.ndarray:
     """
         Load an image from a path and display image informations
 
@@ -32,7 +32,7 @@ def ft_load(path: str) -> list:
             else:
                 print(array.shape)
             print(array)
-            return array.tolist()
+            return array
     except AssertionError as msg:
         print("AssertionError:", msg)
     except FileNotFoundError as msg:

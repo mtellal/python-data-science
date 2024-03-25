@@ -11,6 +11,9 @@ print(slice_me(family, 1, -2))
 
 ### MORE TESTS ####
 
+print("slice_me.__doc__")
+print(slice_me.__doc__)
+
 c='\033[0;1;97m'
 red='\033[0;1;91m'
 green='\033[0;1;92m'
@@ -49,16 +52,21 @@ test_slice_me([1], 0, 0)
 test_slice_me(["s"], 0, 1)
 test_slice_me([{1, 2}], 0, 1)
 
+
 print(c, "\ninvalid lists", nc)
-test_slice_me([["s"]], 0, 1)
 test_slice_me([[1], "d"], 0, 1)
 test_slice_me([[1], [1, 2]], 0, 1)
-test_slice_me([["s"]], 0, 1)
 
 print(c, "\nvalid 2d array\n", nc)
+test_slice_me([["s"]], 0, 1)
 test_slice_me([[1], [2], [3]], 0, 1)
 test_slice_me([[1], [2], [3]], 2, 1)
 test_slice_me([[1], [2], [3]], 0, 2)
 test_slice_me([[1], [2], [3]], 0, 10)
 test_slice_me([[1], [2], [3]], 0, -1)
+test_slice_me([[1], [2], [3]], 0, -2)
+test_slice_me([[1], ['g'], [2]], 0, 1)
+test_slice_me([[1, 3], ['3', 5], [[1, 2], 5] ], 0, 1)
+
+
 

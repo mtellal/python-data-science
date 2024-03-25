@@ -7,7 +7,7 @@ import numpy as np
 """
 
 
-def ft_load(path: str) -> list:
+def ft_load(path: str) -> np.ndarray:
     """
         Load an image from a path and display image informations
 

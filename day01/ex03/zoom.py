@@ -11,7 +11,6 @@ about it and display it after "zooming".
 - The number of channel
 - The pixel content of the image
 - Display the scale on x and u axis on the image
-
 """
 
 
@@ -57,20 +56,52 @@ def printImageInformations(img: Image):
     size = img.size
     array = np.array(img)
     array = [[[x] for x in row] for row in array]
-    array = np.asarray(array)
+    array = np.array(array)
     shape = np.shape(array)
     print("New shape after slicing:", str(shape), "or", str(size))
     print(array)
 
 
+def ft_grey(array: list) -> np.ndarray:
+    final = []
+    for row in range(0, len(array)):
+        new_line = []
+        for column in range(0, len(array[0])):
+            if isinstance(array[row][column], list):
+                if isinstance(array[row][column][0], list):
+                    raise Exception("Invalid image (4 dimensions found")
+                else:
+                    pixels = [0, 0, 0]
+                    pixels[0] = array[row][column][0] / 3
+                    pixels[1] = array[row][column][1] / 3
+                    pixels[2] = array[row][column][2] / 3
+                    pixel = pixels[0] + pixels[1] + pixels[2]
+                    new_line.append(int(pixel))
+            else:
+                new_line.append(array[row][column])
+        final.append(new_line)
+    return np.array(final, np.uint8)
+
+
 def main():
+    """
+A program that should load the image "animal.jpeg", print some information
+about it and display it after "zooming".
+
+- The size in pixel on both X and Y axis
+- The number of channel
+- The pixel content of the image
+- Display the scale on x and u axis on the image
+
+"""
     array = ft_load("animal.jpeg")
     if len(array) == 0:
         return
     try:
         img = Image.fromarray(array)
         img = img.crop((450, 100, 850, 500))
-        img = img.convert("L")
+        _array = ft_grey(np.array(img).tolist())
+        img = Image.fromarray(_array)
         printImageInformations(img)
         final_img = createFinalImage(img)
         final_img.show()

@@ -8,6 +8,10 @@ print(bmi, type(bmi))
 print(apply_limit(bmi, 26))
 
 
+print("doc give_bmi => ", give_bmi.__doc__)
+print("doc apply_limit => ", apply_limit.__doc__)
+
+
 c = '\033[0;1;97m'
 nc = '\033[0m'
 
@@ -18,7 +22,7 @@ def test_give_bmi(heights: list, weights: list):
     print(give_bmi(heights, weights))
     print()
 
-print(c, "\nMORE TESTS ON give_bmi\n", nc)
+print(c, "\n///////////     MORE TESTS ON give_bmi      ///////////n", nc)
 
 print(c, "INVALID ARGUMENTS\n", nc)
 
@@ -34,19 +38,19 @@ test_give_bmi([1], [1, 2, 3]) # not same size
 
 test_give_bmi([(1), "e", 5], [1, 2, 3]) # invalid type item
 
-test_give_bmi([(1), (1), 5], [1, 2, 3]) # invalid type item
+test_give_bmi([(1), (1,), 5], [1, 2, 3]) # invalid type item
 
-test_give_bmi([(1, 2)], [1, 2, 3]) # invalid type item + size
+test_give_bmi([(1, 2)], [1, 2.5, 3]) # invalid type item + size
 
-test_give_bmi([[1], 2, 3], [1, 2, 3]) # invalid item 
+test_give_bmi([[1], 2, 3], [1.1, 2, 3]) # invalid item 
 
-test_give_bmi([1, 2, [3]], [1, 2, 3]) # invalid item 
+test_give_bmi([1, 2.863, [3]], [1, 2, 3]) # invalid item 
 
-test_give_bmi([[1], 2, 3], [1, 2, 3]) # invalid item 
+test_give_bmi([[1], 2, 3], [1.349, 2, 3]) # invalid item 
 
 test_give_bmi([], [1]) # invalid size
 
-test_give_bmi([1], []) # invalid size
+test_give_bmi([1, 2, 3.0], [1, 2]) # invalid size
 
 test_give_bmi([1], "") # invalid size
 
@@ -55,6 +59,11 @@ test_give_bmi([1], None) # invalid size
 test_give_bmi(None, None) # invalid size
 
 test_give_bmi([0], [1]) # can't calculate bmi from height as 0 
+
+test_give_bmi([0], [56464646464646464])
+
+test_give_bmi([1, 2, 0], [78, 85 ,96])
+
 
 print(c, "\nVALID ARGUMENTS\n", nc)
 
@@ -66,7 +75,6 @@ test_give_bmi([1], [1])
 
 test_give_bmi([-1, 1], [1, -1])
 
-test_give_bmi([0], [56464646464646464])
 
 test_give_bmi([64164164165416841654], [56464646464646464])
 
@@ -80,12 +88,14 @@ test_give_bmi([1, 1e300, 233], [-54654651, -542, -3543])
 
 
 
+
+
 def test_apply_limit(bmi: list, limit: int) -> list[bool]:
     print(f"bmi={bmi}, limit={limit}")
     print(apply_limit(bmi, limit))
     print()
 
-print(c, "\nMORE TEST ON apply_limit\n", nc)
+print(c, "\n///////////         MORE TEST ON apply_limit        ///////////\n", nc)
 
 print(c, "\nINVALID ARGS\n", nc)
 
@@ -107,11 +117,16 @@ test_apply_limit([1, 3, 2], "dwfw")
 
 test_apply_limit([1, 3, 2], [5])
 
+test_apply_limit([1, 3, 2], 25.2)
+
+
 print(c, "\nVALID ARGS\n", nc)
 
 test_apply_limit([1, 2, 3], 654654654654654465465464565465465465465)
 
 test_apply_limit([654654, 646.235, 927.3], -654)
+
+test_apply_limit([654654, 646.235, 927.3], -0)
 
 test_apply_limit([0, 0, 0], 9223372036854775808)
 

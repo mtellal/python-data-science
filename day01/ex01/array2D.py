@@ -19,9 +19,7 @@ def verify_lists(_list: list, start: int, end: int):
     assert type(start) is int, "start not an int"
     assert type(end) is int, "end not an int"
     for x in _list:
-        assert type(x) is list, "bad type list"
-        for e in x:
-            assert type(e) is int or type(e) is float, "item not float or int"
+        assert type(x) is list, "bad item type"
         assert len(x) == len(_list[0]), "list item bad size"
 
 

@@ -6,7 +6,7 @@ import numpy as np
 def createImage(array, title = None):
     array = np.array(array, np.uint8)
     print(array.shape)
-    print("array => ", array)
+    print(array)
     img = Image.fromarray(array)
     img.show(title)
 
@@ -62,3 +62,27 @@ createImage(array)
 #array = ft_grey_np(_array)
 #createImage(array)
 
+
+def testFunctions(arg: str):
+    print("testing:", str(arg))
+    ft_invert(arg)
+    ft_red(arg)
+    ft_green(arg)
+    ft_blue(arg)
+    ft_grey(arg)
+
+
+print("///// MORE TEST WITH ARGS /////")
+testFunctions("")
+testFunctions("wdfwd")
+testFunctions(654)
+testFunctions([1])
+testFunctions([1, 2, 3, 4, 5])
+testFunctions([1, 2, 3, [4, 5]])
+testFunctions([[1, 2], [2, 3], [4, 5]])
+test_array = np.array([1, 2, 34])
+test_array1 = np.array([])
+test_array2 = np.array(["dwf"])
+testFunctions(test_array)
+testFunctions(test_array1)
+testFunctions(test_array2)
