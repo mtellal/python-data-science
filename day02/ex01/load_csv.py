@@ -6,7 +6,7 @@ import numpy as np
 Return load function that load an csv file
 """
 
-def load(path: str) -> np.ndarray:
+def load(path: str, display: bool = False) -> np.ndarray:
     """
     Takes a path as argument, writes the dimensions of the data set
     and returns it
@@ -23,12 +23,13 @@ def load(path: str) -> np.ndarray:
                 final.append(row)
                 begin = row[0: 5]
                 end = row[-5: len(row)]
-                for x in begin:
-                    print(str(x), end=' ')
-                print("...", end=' ')
-                for x in end:
-                    print(str(x), end=' ')
-                print()
+                if display:
+                    for x in begin:
+                        print(str(x), end=' ')
+                    print("...", end=' ')
+                    for x in end:
+                        print(str(x), end=' ')
+                    print()
             return np.array(final)
     except Exception as msg:
         print("Error:", msg)
