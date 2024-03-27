@@ -2,9 +2,10 @@ import matplotlib.pyplot as plt
 from load_csv import load
 import numpy as np
 
+
 def findRow(country: str, file: np.ndarray) -> np.ndarray:
     for row in file:
-        if row[0]  == country:
+        if row[0] == country:
             _row = []
             for e in row[1:]:
                 if e[-1] == "M" or e[-1] == "k":
@@ -13,9 +14,8 @@ def findRow(country: str, file: np.ndarray) -> np.ndarray:
             return _row
 
 
-
 def main():
-    #try:
+    try:
         file = load("population_total.csv")
         if file is None:
             return
@@ -24,11 +24,8 @@ def main():
 
         france = findRow("France", file)
         france = france[:len(dates)]
-        
         belgium = findRow("Belgium", file)
         belgium = belgium[:len(dates)]
-
-        
         plt.plot(dates, france, color="green", label="France")
         plt.plot(dates, belgium, color="blue", label="Belgium")
 
@@ -47,11 +44,11 @@ def main():
         handles, labels = plt.gca().get_legend_handles_labels()
         print(handles, labels)
         order = [1, 0]  # Spécifiez l'ordre des handles (France puis Belgium)
-        plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order])
-
-
-        plt.legend(["Belgium", "France"], loc="lower right")        
+        plt.legend([handles[i] for i in order], [labels[i] for i in order])
+        plt.legend(["Belgium", "France"], loc="lower right")
         plt.show()
+    except Exception as msg:
+        print("Error:", msg)
 
 
 if __name__ == "__main__":
