@@ -14,12 +14,13 @@ graph must have a title and a legend for each axis.
 def main():
     try:
         file = load("life_expectancy_years.csv")
+        picked_country = "France"
         if file is None:
             return
         dates = file[0, 1:]
         france_ages = []
         for row in file:
-            if row[0] == "France":
+            if row[0] == picked_country:
                 france_ages = row[1:].astype(float)
                 break
         indexes = [i for i in range(0, len(france_ages), 40)]

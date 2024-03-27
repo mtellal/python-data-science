@@ -1,9 +1,27 @@
 import matplotlib.pyplot as plt
 from load_csv import load
 import numpy as np
+import sys
+
+
+"""
+A program that calls the load function from the first exercise,
+loads the file population_total.csv, and displays the country
+information of your campus versus other country of your choice.
+Your graph must have a title, a legend for each axis and a
+legend for each graph.
+"""
 
 
 def findRow(country: str, file: np.ndarray) -> np.ndarray:
+    """
+    From a file, iterate and file the country data
+    Arguments:
+        country (str): country str to match in rows[0]
+        file (array): 2D array that corredonds to csv file
+    Return:
+        array: row data of float elements
+    """
     for row in file:
         if row[0] == country:
             _row = []
@@ -12,43 +30,54 @@ def findRow(country: str, file: np.ndarray) -> np.ndarray:
                     _row.append(e[:-1])
             _row = np.array(_row).astype(float)
             return _row
+    return None
+
+
+def formatLegend():
+    handles, labels = plt.gca().get_legend_handles_labels()
+    order = [1, 0]
+    handles_ordered = [handles[i] for i in order]
+    labels_ordered = [labels[i] for i in order]
+    plt.legend(handles_ordered, labels_ordered, loc="lower right")
 
 
 def main():
-    try:
+    #try:
+        picked_country = "Belgium"
+        if len(sys.argv) == 2:
+            picked_country = sys.argv[1]
         file = load("population_total.csv")
         if file is None:
             return
         dates = file[0, 1:]
-        dates = [x for x in dates if int(x) <= 2050]
+        dates = np.array([x for x in dates if int(x) <= 2050])
 
         france = findRow("France", file)
         france = france[:len(dates)]
-        belgium = findRow("Belgium", file)
-        belgium = belgium[:len(dates)]
+        country = findRow(picked_country, file)
+        if country is None:
+            raise Exception("country '" + picked_country + "' not found")
+        country = country[:len(dates)]
+        country = np.resize(country, dates.shape) 
+        print(country)
         plt.plot(dates, france, color="green", label="France")
-        plt.plot(dates, belgium, color="blue", label="Belgium")
+        plt.plot(dates, country, color="blue", label=picked_country)
 
         xindexes = [i for i in range(0, len(france), 40)]
         xvalues = [dates[i] for i in xindexes]
         plt.xticks(xindexes, xvalues)
 
-        plt.ylim(0, 70)
-        yindexes = [20, 40, 60]
-        yvalues = ["20M", "40M", "60M"]
-        plt.yticks(yindexes, yvalues)
+        #yindexes = [20, 40, 60]
+        #yvalues = ["20M", "40M", "60M"]
+        #plt.yticks(yindexes, yvalues)
 
         plt.title("Population Projections")
         plt.xlabel("Year")
         plt.ylabel("Population")
-        handles, labels = plt.gca().get_legend_handles_labels()
-        print(handles, labels)
-        order = [1, 0]  # Spécifiez l'ordre des handles (France puis Belgium)
-        plt.legend([handles[i] for i in order], [labels[i] for i in order])
-        plt.legend(["Belgium", "France"], loc="lower right")
+        formatLegend()
         plt.show()
-    except Exception as msg:
-        print("Error:", msg)
+    #except Exception as msg:
+     #   print("Error:", msg)
 
 
 if __name__ == "__main__":
