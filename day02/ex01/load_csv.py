@@ -6,6 +6,7 @@ import numpy as np
 Return load function that load an csv file
 """
 
+
 def load(path: str, display: bool = False) -> np.ndarray:
     """
     Takes a path as argument, writes the dimensions of the data set
