@@ -35,15 +35,14 @@ def findRow(country: str, file: np.ndarray) -> np.ndarray:
     return None
 
 
-def formatLegend():
-    handles, labels = plt.gca().get_legend_handles_labels()
-    order = [1, 0]
-    handles_ordered = [handles[i] for i in order]
-    labels_ordered = [labels[i] for i in order]
-    plt.legend(handles_ordered, labels_ordered, loc="lower right")
-
-
 def main():
+    """
+A program that calls the load function from the first exercise,
+loads the file population_total.csv, and displays the country
+information of your campus versus other country of your choice.
+Your graph must have a title, a legend for each axis and a
+legend for each graph.
+    """
     try:
         picked_country = "Belgium"
         if len(sys.argv) == 2:
@@ -60,14 +59,15 @@ def main():
         if country is None:
             raise Exception("country '" + picked_country + "' not found")
         country = country[:len(dates)]
-        country = np.resize(country, dates.shape) 
-        plt.plot(dates, france, color="green", label="France")
+        country = np.resize(country, dates.shape)
+
         plt.plot(dates, country, color="blue", label=picked_country)
+        plt.plot(dates, france, color="green", label="France")
 
         xindexes = [i for i in range(0, len(france), 40)]
         xvalues = [dates[i] for i in xindexes]
         plt.xticks(xindexes, xvalues)
-        
+
         max_value = 70 * 10**6
         max_value_country = np.amax(country)
 
@@ -82,7 +82,6 @@ def main():
         plt.title("Population Projections")
         plt.xlabel("Year")
         plt.ylabel("Population")
-        formatLegend()
         plt.show()
     except Exception as msg:
         print("Error:", msg)
