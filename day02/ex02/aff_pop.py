@@ -26,8 +26,10 @@ def findRow(country: str, file: np.ndarray) -> np.ndarray:
         if row[0] == country:
             _row = []
             for e in row[1:]:
-                if e[-1] == "M" or e[-1] == "k":
-                    _row.append(e[:-1])
+                if e[-1] == "M":
+                    _row.append(int(float(e[:-1]) * 1000000))
+                elif e[-1] == "k":
+                    _row.append(int(float(e[:-1]) * 1000))
             _row = np.array(_row).astype(float)
             return _row
     return None
@@ -42,7 +44,7 @@ def formatLegend():
 
 
 def main():
-    #try:
+    try:
         picked_country = "Belgium"
         if len(sys.argv) == 2:
             picked_country = sys.argv[1]
@@ -59,25 +61,31 @@ def main():
             raise Exception("country '" + picked_country + "' not found")
         country = country[:len(dates)]
         country = np.resize(country, dates.shape) 
-        print(country)
         plt.plot(dates, france, color="green", label="France")
         plt.plot(dates, country, color="blue", label=picked_country)
 
         xindexes = [i for i in range(0, len(france), 40)]
         xvalues = [dates[i] for i in xindexes]
         plt.xticks(xindexes, xvalues)
+        
+        max_value = 70 * 10**6
+        max_value_country = np.amax(country)
 
-        #yindexes = [20, 40, 60]
-        #yvalues = ["20M", "40M", "60M"]
-        #plt.yticks(yindexes, yvalues)
+        if max_value < max_value_country:
+            max_value = max_value_country
+
+        plt.ylim(0, max_value)
+        yindexes = [i for i in range(0, int(max_value), int(max_value / 4))]
+        yvalues = [str(int(i / 10**6)) + "M" for i in yindexes]
+        plt.yticks(yindexes, yvalues)
 
         plt.title("Population Projections")
         plt.xlabel("Year")
         plt.ylabel("Population")
         formatLegend()
         plt.show()
-    #except Exception as msg:
-     #   print("Error:", msg)
+    except Exception as msg:
+        print("Error:", msg)
 
 
 if __name__ == "__main__":
