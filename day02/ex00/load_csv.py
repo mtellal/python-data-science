@@ -14,6 +14,8 @@ def load(path: str):
     try:
         assert type(path) is str, "invalid arg"
         file = pd.read_csv(path)
+        np_array = file.to_numpy()
+        print("Loading dataset of dimensions", np_array.shape)
         return file
     except Exception as msg:
         print("Error:", msg)
@@ -22,6 +24,7 @@ def load(path: str):
 
 """
 print(load("life_expectancy_years.csv"), "\n")
+print(load("population_total.csv"), "\n")
 print(load("dfw"), "\n")
 print(load([2, 3, 4]), "\n")
 print(load(""), "\n")

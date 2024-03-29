@@ -18,14 +18,3 @@ def load(path: str):
     except Exception as msg:
         print("Error:", msg)
     return None
-
-
-"""
-print(load("life_expectancy_years.csv"), "\n")
-print(load("dfw"), "\n")
-print(load([2, 3, 4]), "\n")
-print(load(""), "\n")
-print(load("life_expectancy_years_err.csv"), "\n")
-print(load("e.csv"), "\n")
-print(load(".csv"), "\n")
-"""
