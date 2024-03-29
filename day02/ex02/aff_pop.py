@@ -13,60 +13,62 @@ legend for each graph.
 """
 
 
-def findRow(country: str, file: np.ndarray) -> np.ndarray:
+def scale(value: str):
     """
-    From a file, iterate and file the country data
+    Transform a string to a float in the good scale
+    (billion, millions, thousands ...)
     Arguments:
-        country (str): country str to match in rows[0]
-        file (array): 2D array that corredonds to csv file
+        value  (str): value to convert
     Return:
-        array: row data of float elements
+        float: the converted value
     """
-    for row in file:
-        if row[0] == country:
-            _row = []
-            for e in row[1:]:
-                if e[-1] == "M":
-                    _row.append(int(float(e[:-1]) * 1000000))
-                elif e[-1] == "k":
-                    _row.append(int(float(e[:-1]) * 1000))
-            _row = np.array(_row).astype(float)
-            return _row
-    return None
+    if value.endswith("B"):
+        return float(value[:-1]) * 10**9
+    elif value.endswith("M"):
+        return float(value[:-1]) * 10**6
+    elif value.endswith("k"):
+        return float(value[:-1]) * 10**3
+    else:
+        return float(value)
+
+
+def formatDatas(d: list, lim: int):
+    """
+    Convert each elements of a list and return it
+    Arguments:
+        d (list): list to convert
+        lim (int): limit of the number of element in
+        the list (used to normalise dates datas with rows)
+    Return:
+        List converted
+    """
+    return [scale(d.iloc[i]) for i in range(0, len(d)) if i < lim]
 
 
 def main():
-    """
-A program that calls the load function from the first exercise,
-loads the file population_total.csv, and displays the country
-information of your campus versus other country of your choice.
-Your graph must have a title, a legend for each axis and a
-legend for each graph.
-    """
     try:
-        picked_country = "Belgium"
+        p_country = "Belgium"
         if len(sys.argv) == 2:
-            picked_country = sys.argv[1]
+            p_country = sys.argv[1]
         file = load("population_total.csv")
         if file is None:
             return
-        dates = file[0, 1:]
-        dates = np.array([x for x in dates if int(x) <= 2050])
+        dates = file.columns
+        dates = [int(d) for d in dates if d != "country" and int(d) <= 2050]
 
-        france = findRow("France", file)
-        france = france[:len(dates)]
-        country = findRow(picked_country, file)
-        if country is None:
-            raise Exception("country '" + picked_country + "' not found")
-        country = country[:len(dates)]
-        country = np.resize(country, dates.shape)
+        columns = ~file.columns.isin(["country"])
+        france = file.loc[file.country == "France", columns].squeeze()
+        france = formatDatas(france, len(dates))
 
-        plt.plot(dates, country, color="blue", label=picked_country)
+        countries = file.loc[:, "country"]
+        if p_country in countries.to_numpy():
+            country = file.loc[file.country == p_country, columns].squeeze()
+            country = formatDatas(country, len(dates))
+        else:
+            raise Exception("country '" + p_country + "' not found")
+
+        plt.plot(dates, country, color="blue", label=p_country)
         plt.plot(dates, france, color="green", label="France")
-
-        xindexes = [i for i in range(0, len(france), 40)]
-        xvalues = [dates[i] for i in xindexes]
-        plt.xticks(xindexes, xvalues)
 
         max_value = 70 * 10**6
         max_value_country = np.amax(country)
@@ -79,6 +81,7 @@ legend for each graph.
         yvalues = [str(int(i / 10**6)) + "M" for i in yindexes]
         plt.yticks(yindexes, yvalues)
 
+        plt.legend(loc="lower right")
         plt.title("Population Projections")
         plt.xlabel("Year")
         plt.ylabel("Population")
