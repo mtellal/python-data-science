@@ -22,13 +22,3 @@ class King(Baratheon, Lannister):
     
     def get_hairs(self):
         return self.hairs
-
-
-Joffrey = King("Joffrey")
-print(Joffrey.__dict__)
-Joffrey.set_eyes("blue")
-Joffrey.set_hairs("light")
-print(Joffrey.get_eyes())
-print(Joffrey.get_hairs())
-print(Joffrey.__dict__)
-
