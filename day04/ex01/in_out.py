@@ -9,6 +9,11 @@ def pow(x: int | float) -> int | float:
 
 
 def outer(x: int | float, function) -> object:
+    """
+    A  function that takes as argument a number
+    and a function, it returns an object that when called
+    returns the result of the arguments calculation
+    """
     count = 0
 
     def inner() -> float:
